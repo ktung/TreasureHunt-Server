@@ -4,7 +4,12 @@
 
 var express = require('express'),
     router = express.Router(),
-    mongoose = require('mongoose'); //mongo connection
+    mongoose = require('mongoose'),
+    bodyParser = require("body-parser")
+    app = express(); //mongo connection
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 router.route('/areas')
     .get(function(req, res) {
@@ -13,12 +18,12 @@ router.route('/areas')
                 return console.error(err);
             } else {
                 res.format({
-                    html: function(){
-                        res.render('areas', {
-                            title: 'All my Areas',
-                            "areas" : areas
-                        });
-                    },
+                    // html: function(){
+                    //     res.render('areas', {
+                    //         title: 'All my Areas',
+                    //         "areas" : areas
+                    //     });
+                    // },
                     //JSON response will show all blobs in JSON format
                     json: function(){
                         res.json(areas);
@@ -29,7 +34,6 @@ router.route('/areas')
     })
     //POST a new area
     .post(function(req, res) {
-
         var center = {latitude: req.body.latitude, longitude: req.body.longitude}
         var radius = req.body.radius;
         var enigmas = [];
@@ -44,10 +48,10 @@ router.route('/areas')
             } else {
                 console.log('POST creating new area: ' + area);
                 res.format({
-                    html: function(){
-                        res.location("areas");
-                        res.redirect("/areas");
-                    },
+                    // html: function(){
+                    //     res.location("areas");
+                    //     res.redirect("/areas");
+                    // },
                     //JSON response will show the newly created area
                     json: function(){
                         res.json(area);

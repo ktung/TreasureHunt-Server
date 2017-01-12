@@ -1,12 +1,15 @@
 'use strict';
 
 var express = require('express'),
+    bodyParser = require('body-parser'),
     exphbs  = require('express-handlebars'),// "express-handlebars"
     db = require('./models/db'),
     area = require('./models/areas'),
     enigma = require('./models/enigmas');
 
 var app = express();
+
+app.use(bodyParser());
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
