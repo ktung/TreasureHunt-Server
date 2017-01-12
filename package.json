@@ -1,0 +1,27 @@
+{
+  "name": "treasturehunt-server",
+  "version": "1.0.0",
+  "description": "Node.JS server for the Treasure Hunt Project (Web Client/Server courses)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ktung/TreasureHunt-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ktung/TreasureHunt-Server/issues"
+  },
+  "homepage": "https://github.com/ktung/TreasureHunt-Server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mongodb": "^2.2.19",
+    "mongoose": "^4.7.6",
+    "socket.io": "^1.7.2"
+  }
+}

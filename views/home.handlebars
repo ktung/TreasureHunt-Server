@@ -1,0 +1,25 @@
+<div id="map"></div>
+
+<script type="text/javascript">
+    // Init map
+    var map = L.map('map').setView([43.6203152, 7.0656119], 15);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'ktung.2jkp045o',
+        accessToken: 'pk.eyJ1Ijoia3R1bmciLCJhIjoiY2l4cTY4MThsMDR4dzMycHU4bGk4eGl4MCJ9.oRNkkG9SFOdZ-bEyaw6vxw'
+    }).addTo(map);
+
+    var marker = L.marker([43.6203152, 7.0656119]).addTo(map);
+    var circle = L.circle([43.6203152, 7.0656119], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 50
+    }).addTo(map);
+    setTimeout(function() {
+        marker.remove();
+    }, 3000);
+    marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+    circle.bindPopup("I am a circle.");
+</script>
