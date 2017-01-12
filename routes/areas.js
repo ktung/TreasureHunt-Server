@@ -13,6 +13,8 @@ app.use(bodyParser.json());
 
 router.route('/areas')
     .get(function(req, res) {
+        res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+
         mongoose.model('Area').find({}, function (err, areas) {
             if (err) {
                 return console.error(err);
