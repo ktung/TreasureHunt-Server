@@ -5,6 +5,8 @@ var express = require('express'),
 
 app = express(); //mongo connection$
 
+var Person = mongoose.model('Team', teamSchema);
+
 router.route('/login')
     .post(function(req,res){
         var team = req.body.team;

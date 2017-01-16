@@ -8,6 +8,11 @@ var express = require('express'),
     enigma = require('./models/enigmas');
 
 var app = express();
+var server = require('http').createServer(app);
+
+var io = require('socket.io').listen(server),
+    login = require('./socket/login')(io);
+io.set('origins', '*');
 
 app.use(bodyParser());
 
@@ -26,6 +31,6 @@ var areas = require('./routes/areas');
 app.use('/', routes);
 app.use('/', areas);
 
-app.listen(8080, function () {
+server.listen(8080, function () {
     console.log('express-handlebars example server listening on: 8080');
 });

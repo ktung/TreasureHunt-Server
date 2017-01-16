@@ -5,11 +5,12 @@
 var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
-    bodyParser = require("body-parser")
+    bodyParser = require("body-parser");
+var inspect = require('util').inspect;
     app = express(); //mongo connection
 
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 router.route('/areas')
     .get(function(req, res) {
