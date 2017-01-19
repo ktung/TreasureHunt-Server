@@ -13,15 +13,10 @@ exports = module.exports = function(io){
 
         socket.on('newUser', function (data) {
             console.log('connectEvent triggered   '+ data.name +" "+ data.team);
-            mongoose.model('Area').find({}, function (err, areas) {
-                if (err) {
-                    return console.error(err);
-                } else {
-                    socket.emit('areas', res.json(areas));
-                }
-            });
+            socket.emit('response', 'ok');
         });
 
+        require('./areas.js')(socket);
         require('./position.js')(socket);
     });
 }
