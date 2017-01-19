@@ -14,9 +14,17 @@
     var socket = io.connect('http://localhost:8080');
     socket.emit('serverConnect');
 
+
+    var markers = [];
     socket.on('userPosition', function(data) {
         console.log("position" + data)
-        var marker = L.marker([data.latitude, data.longitude]).addTo(map);
+
+        if (markers[data.id] !== undefined) {
+            markers[data.id].remove();
+        }
+
+        var marker = L.marker([data.position.latitude, data.position.longitude]).addTo(map);
+        markers[data.id] = marker;
     });
 
     
