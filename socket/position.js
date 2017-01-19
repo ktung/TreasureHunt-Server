@@ -1,5 +1,6 @@
-exports = module.exports = function(io, socket){
-    io.on('position', function (data) {
+exports = module.exports = function(socket){
+    socket.on('sendPosition', function (data) {
+        console.log(data);
         var lat = data.position.coords.latitude;
         var long = data.position.coords.longitude;
 

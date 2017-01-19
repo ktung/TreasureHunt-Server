@@ -3,7 +3,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require("body-parser");
 
-app = express(); //mongo connection$
+app = express(); //mongo connection
 
 var Person = mongoose.model('Team', teamSchema);
 

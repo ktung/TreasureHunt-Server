@@ -6,15 +6,16 @@ exports = module.exports = function(io){
 
     io.sockets.on('connection', function (socket) {
         console.log("New connection");
-        socket.on('connectEvent', function () {
-            console.log('connectEvent triggered');
-            map.add(lepoint)
-        });
 
-        io.sockets.on("serverConnect", function(socket){
+        socket.on("serverConnect", function(){
             global.positionServerId = socket.id;
         });
 
-        require('./position.js')(io,socket);
+        socket.on('newUser', function (data) {
+            console.log('connectEvent triggered   '+ data.name +" "+ data.team);
+            socket.emit('response', 'ok')
+        });
+
+        require('./position.js')(socket);
     });
-};
+}

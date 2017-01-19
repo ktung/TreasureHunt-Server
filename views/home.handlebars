@@ -1,5 +1,6 @@
 <div id="map"></div>
 
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script type="text/javascript">
     // Init map
     var map = L.map('map').setView([43.6203152, 7.0656119], 15);
@@ -10,16 +11,24 @@
         accessToken: 'pk.eyJ1Ijoia3R1bmciLCJhIjoiY2l4cTY4MThsMDR4dzMycHU4bGk4eGl4MCJ9.oRNkkG9SFOdZ-bEyaw6vxw'
     }).addTo(map);
 
-    var marker = L.marker([43.6203152, 7.0656119]).addTo(map);
+    var socket = io.connect('http://localhost:8080');
+    socket.emit('serverConnect');
+
+    socket.on('userPosition', function(data) {
+        console.log("position" + data)
+        var marker = L.marker([data.latitude, data.longitude]).addTo(map);
+    });
+
+    
     var circle = L.circle([43.6203152, 7.0656119], {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
         radius: 50
     }).addTo(map);
-    setTimeout(function() {
-        marker.remove();
-    }, 3000);
-    marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+    // setTimeout(function() {
+    //     marker.remove();
+    // }, 3000);
+    // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
     circle.bindPopup("I am a circle.");
 </script>
