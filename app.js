@@ -12,7 +12,7 @@ var server = require('http').createServer(app);
 
 var io = require('socket.io').listen(server),
     login = require('./socket/login')(io);
-io.set('origins', '*');
+io.set('origins', '*:*');
 
 app.use(bodyParser());
 
