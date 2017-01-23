@@ -11,7 +11,7 @@
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
     var socket = io.connect('http://localhost:8080');
-    socket.emit('newUser', {name: 'a', team:'b'});
+    socket.emit('newUser', {name: 'lateam', team:'b'});
     socket.emit('areasRequest');
     socket.on('areas', function(data) {
         console.log(data);

@@ -5,6 +5,7 @@ var express = require('express'),
     exphbs  = require('express-handlebars'),// "express-handlebars"
     db = require('./models/db'),
     area = require('./models/areas'),
+    team = require('./models/teams'),
     enigma = require('./models/enigmas');
 
 var app = express();
