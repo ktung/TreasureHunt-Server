@@ -28,9 +28,11 @@ app.set('view engine', 'handlebars');
 
 var routes = require('./routes/index');
 var areas = require('./routes/areas');
+var enigmas = require('./routes/enigmas');
 
 app.use('/', routes);
 app.use('/', areas);
+app.use('/', enigmas);
 
 server.listen(8080, function () {
     console.log('express-handlebars example server listening on: 8080');

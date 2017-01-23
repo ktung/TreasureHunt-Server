@@ -19,6 +19,7 @@ exports = module.exports = function(io){
             //socket.emit('response', 'ok');
         });
 
+        require('./enigmas.js')(socket);
         require('./areas.js')(socket);
         require('./position.js')(socket);
     });

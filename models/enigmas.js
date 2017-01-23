@@ -10,7 +10,7 @@ var enigmaSchema = new mongoose.Schema({
     enigma: String,
     hint: [String],
     points: Number,
-    image: { type: Buffer, required: false},
+    image: { type: String, required: false},
 
     area: {type: Schema.Types.ObjectId, ref: 'Area'}
 });
