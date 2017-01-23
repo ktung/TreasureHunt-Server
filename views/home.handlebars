@@ -11,9 +11,29 @@
         accessToken: 'pk.eyJ1Ijoia3R1bmciLCJhIjoiY2l4cTY4MThsMDR4dzMycHU4bGk4eGl4MCJ9.oRNkkG9SFOdZ-bEyaw6vxw'
     }).addTo(map);
 
+    // Init areas
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "http://localhost:8080/areas", true);
+    xhr.send(null);
+
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+            var areas = JSON.parse(xhr.responseText);
+            areas.forEach(function(area) {
+                var circle = L.circle([area.center.latitude, area.center.longitude], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: area.radius
+                }).addTo(map);
+            });
+        }
+    };
+
+    // Init socket user position
     var socket = io.connect('http://localhost:8080');
     socket.emit('serverConnect');
-
 
     var markers = [];
     socket.on('userPosition', function(data) {
@@ -24,19 +44,7 @@
         }
 
         var marker = L.marker([data.position.latitude, data.position.longitude]).addTo(map);
+        marker.bindPopup("Team <b>"+ data.id +"</b>")
         markers[data.id] = marker;
     });
-
-    
-    var circle = L.circle([43.6203152, 7.0656119], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 50
-    }).addTo(map);
-    // setTimeout(function() {
-    //     marker.remove();
-    // }, 3000);
-    // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-    circle.bindPopup("I am a circle.");
 </script>
