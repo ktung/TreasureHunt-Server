@@ -3,13 +3,16 @@
  */
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var enigmaSchema = new mongoose.Schema({
     name: String,
-    zone: String,
-    points: Number,
     enigma: String,
-    image: { type: Buffer, required: false}
+    hint: [String],
+    points: Number,
+    image: { type: Buffer, required: false},
+
+    area: {type: Schema.Types.ObjectId, ref: 'Area'}
 });
 
 mongoose.model('Enigma', enigmaSchema);

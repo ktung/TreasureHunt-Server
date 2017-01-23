@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var areaSchema = new mongoose.Schema({
     center: {
@@ -10,7 +11,7 @@ var areaSchema = new mongoose.Schema({
         longitude: String
     },
     radius: Number,
-    enigmas: [String]
+    enigmas: [{type: Schema.Types.ObjectId, ref: 'Enigma'}]
 });
 
 mongoose.model('Area', areaSchema);

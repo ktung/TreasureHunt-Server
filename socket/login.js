@@ -15,7 +15,7 @@ exports = module.exports = function(io){
 
         socket.on('newUser', function (data) {
             console.log('connectEvent triggered   '+ data.name +" "+ data.team);
-            handleConnection(data.team, data.name, socket);
+            handleConnection(data.name, data.team, socket);
             //socket.emit('response', 'ok');
         });
 
