@@ -22,6 +22,8 @@ exports = module.exports = function(io){
         require('./enigmas.js')(socket);
         require('./areas.js')(socket);
         require('./position.js')(socket);
+        require('./answer.js')(socket);
+        require('./chat.js')(socket, io);
     });
 };
 
