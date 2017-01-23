@@ -1,10 +1,11 @@
 exports = module.exports = function(socket){
-    socket.on('sendPosition', function (data) {
-        console.log(data);
-        var lat = data.latitude;
-        var long = data.longitude;
+    socket.on('sendPosition', function (response) {
+        console.log(response);
+        var lat = response.data.latitude;
+        var long = response.data.longitude;
 
-        var data = {id: 1, position: {latitude: lat, longitude: long}};
+        var team = response.id;
+        var data = {id: team, position: {latitude: lat, longitude: long}};
         socket.to(global.positionServerId).emit("userPosition", data);
     });
 };
