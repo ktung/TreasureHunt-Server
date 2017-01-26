@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var inspect = require('util').inspect;
+var
 
 exports = module.exports = function(socket){
     socket.on('enigmaRequest', function (data) {
@@ -29,5 +30,23 @@ exports = module.exports = function(socket){
                 })
             }
         });
+    });
+
+    socket.on('askClue', function(data){
+
+        var enigmaId = data.data.enigmeId;
+        var teamId = data.id;
+
+        mongoose.model('Enigma').find({_id : enigmaId}, function (err, enigma) {
+            if (err) {
+                return console.error(err);
+            } else {
+                var hint = enigma.hint;
+                mongoose.Model('Team').update({_id: teamid}, { $inc : {hintsUsed: 1} }, function (err, data){
+                    socket.emit('responseClue', hint);
+                });
+            }
+        });
+
     });
 };
