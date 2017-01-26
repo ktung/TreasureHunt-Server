@@ -1,1 +1,1 @@
-web: treasure-hunt-pns
+web: node app.js
