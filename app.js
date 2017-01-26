@@ -34,6 +34,7 @@ app.use('/', routes);
 app.use('/', areas);
 app.use('/', enigmas);
 
-server.listen(8080, function () {
-    console.log('express-handlebars example server listening on: 8080');
+var port = process.env.PORT || 8080;
+server.listen(port, function () {
+    console.log('express-handlebars example server listening on: '+ port);
 });
