@@ -45,14 +45,14 @@ exports = module.exports = function(socket){
                 var hint = enigma.hint;
                 mongoose.model('Team')
                 .findOneAndUpdate(
-                    {name: teamName},
-                    {$inc: {hintsUsed: 1}}
+                    { name: teamName },
+                    { $inc: { hintsUsed: 1 } }
                 )
                 .exec(function(err,res) {
                     if (err) {
                         console.log("Error");
                     } else {
-                        socket.emit('responseClue', res);
+                        socket.emit('responseClue', hint);
                     }
                 });
             }
