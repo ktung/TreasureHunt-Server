@@ -36,7 +36,9 @@ var handleConnection =function(pseudo, team, socket){
                 // On créer l'équipe et on ajoute la personne à l'équipe
                 mongoose.model('Team').create({
                     name: team,
-                    members: [pseudo]
+                    members: [pseudo],
+                    enigmasDone: [],
+                    hintsUsed: 0
                 }, function (err, area) {
                     if (err) {
                         res.send("Could not create user");
