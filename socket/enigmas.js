@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var inspect = require('util').inspect;
-var
 
 exports = module.exports = function(socket){
     socket.on('enigmaRequest', function (data) {
+        console.log('socket enigmaRequest'+ inspect(data));
+
         var areaId = data.data.areaId;
         var teamName = data.id;
         console.log("teamName: " + teamName);
@@ -34,14 +35,16 @@ exports = module.exports = function(socket){
     });
 
     socket.on('askClue', function(data){
+        console.log('socket askClue'+ inspect(data));
 
         var enigmaId = data.data.enigmeId;
         var teamName = data.id;
 
-        mongoose.model('Enigma').find({_id : enigmaId}, function (err, enigma) {
+        mongoose.model('Enigma').findOne({_id : enigmaId}, function (err, enigma) {
             if (err) {
                 return console.error(err);
             } else {
+                console.log('Enigma :'+ inspect(enigma));
                 var hint = enigma.hint;
                 mongoose.model('Team')
                 .findOneAndUpdate(

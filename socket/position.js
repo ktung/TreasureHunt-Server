@@ -1,6 +1,8 @@
+var inspect = require('util').inspect;
+
 exports = module.exports = function(socket){
     socket.on('sendPosition', function (response) {
-        console.log(response);
+        console.log('socket sendPosition'+ inspect(response));
         var lat = response.data.latitude;
         var long = response.data.longitude;
 

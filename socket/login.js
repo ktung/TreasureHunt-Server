@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose');
+var inspect = require('util').inspect;
 
 exports = module.exports = function(io){
 
@@ -14,9 +15,8 @@ exports = module.exports = function(io){
         });
 
         socket.on('newUser', function (data) {
-            console.log('connectEvent triggered   '+ data.name +" "+ data.team);
+            console.log('socket newUser'+ inspect(data));
             handleConnection(data.name, data.team, socket);
-            //socket.emit('response', 'ok');
         });
 
         require('./enigmas.js')(socket);

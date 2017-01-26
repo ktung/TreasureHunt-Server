@@ -3,7 +3,7 @@ var inspect = require('util').inspect;
 
 exports = module.exports = function(socket){
     socket.on('sendAnswer', function (data) {
-        console.log('sendAnswer'+ inspect(data));
+        console.log('socket sendAnswer'+ inspect(data));
 
         var rand = Math.floor((Math.random() * 10) + 1);
         if (rand > 4) {
