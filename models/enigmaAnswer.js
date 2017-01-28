@@ -4,11 +4,10 @@ var Schema = mongoose.Schema;
 var enigmaAnswerSchema = new mongoose.Schema({
     team: String,
     validated: Boolean,
-    enigma: String,
-    points: Number,
-    image: { type: String, required: false},
+    enigmaId: String,
 
-    area: {type: Schema.Types.ObjectId, ref: 'Area'}
+    answer: { type: String, required: false},
+    image: { type: Buffer, required: false},
 });
 
 mongoose.model('EnigmaAnswer', enigmaAnswerSchema);

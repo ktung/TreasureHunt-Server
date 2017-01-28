@@ -62,4 +62,33 @@ exports = module.exports = function(socket){
         });
 
     });
+
+    socket.on('enigma')
+
+    socket.on('enigmaAnswer', function (data){
+        var teamName = data.id;
+
+        var enigmaId = data.data.enigmaId;
+        var image = data.data.image;
+        var answer = data.data.answer;
+
+        mongoose.model('EnigmaAnswer').create({
+            team: teamName,
+            validated: false,
+            enigmaId: enigmaId,
+            answer: data.data.answer,
+            image: image
+        }, function (err, answer) {
+            if (err) {
+                res.send("There was a problem adding the information to the database.");
+                console.log(err);
+            } else {
+                res.format({
+                    json: function(){
+                        res.json(answer);
+                    }
+                });
+            }
+        })
+    });
 };
