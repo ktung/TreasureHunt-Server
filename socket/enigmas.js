@@ -21,8 +21,9 @@ exports = module.exports = function(socket){
                         var team = teams[0];
                         var enigmasDone = team.enigmasDone;
 
+                        // @TODO VERIFY IF THE COMPARISON IS CORRECTLY DONE
                         enigmas.forEach(function(enigma) {
-                            if (enigmasDone.indexOf(enigma) === -1){
+                            if (enigmasDone.indexOf(enigma._id) === -1){
                                 socket.emit('enigmaRequest', enigma);
                                 return;
                             }
