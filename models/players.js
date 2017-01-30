@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var playerSchema = new mongoose.Schema({
     name: String,
     team: String,
-    location: String
+    socketId: String
 });
 
 mongoose.model('Player', playerSchema);

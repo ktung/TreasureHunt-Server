@@ -7,7 +7,8 @@ var express = require('express'),
     area = require('./models/areas'),
     team = require('./models/teams'),
     enigma = require('./models/enigmas'),
-    enigmaAnswer = require('./models/enigmaAnswer');
+    player = require('./models/players'),
+    enigmaAnswerModel = require('./models/enigmaAnswer');
 
 var app = express();
 var server = require('http').createServer(app);

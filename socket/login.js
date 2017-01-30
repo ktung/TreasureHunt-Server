@@ -18,7 +18,12 @@ exports = module.exports = function(io){
             console.log('socket newUser'+ inspect(data));
             socket.join(data.team);
             handleConnection(data.name, data.team, socket);
+            registerUser(data.name, data.team, socket);
         });
+
+        socket.on('disconnect', function(){
+            removeUser(socket);
+        })
 
         require('./enigmas.js')(socket);
         require('./areas.js')(socket);
@@ -56,4 +61,24 @@ var handleConnection =function(pseudo, team, socket){
         }
     });
 };
+
+var registerUser = function(pseudo, team, socket){
+    mongoose.model('Player').create({
+        name: pseudo,
+        team: team,
+        socketId : socket.id
+    }, function(err, player){
+        if(err){
+            console.log("Could not add player to database")
+        }
+    });
+};
+
+var removeUser = function(socket){
+    mongoose.model('Player').findOneAndRemove({socketId : socket.id}, null, function(err, res){
+       if (err){
+           console.log("Could not remove player")
+       }
+    });
+}
 
