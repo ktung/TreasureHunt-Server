@@ -9,25 +9,27 @@ app = express(); //mongo connection
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-router.route('enigmaAnswer')
+router.route('/enigmaAnswer')
     .get(function(req, res){
         res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-
+        // var enigmas;
         mongoose.model('Enigma').find({}, function (err, enigmasFound){
             if (err) {
                 console.log("Could not retrieve enigmas enigmaAnswerRoute")
             } else{
-                var enigmas = enigmasFound; // Tableau avec toutes les enigmes
+                // enigmas = enigmasFound; // Tableau avec toutes les enigmes
                 var tabLength = enigmasFound.length;
-
                 var finalTab = [];
 
                 for(var i= 0; i < tabLength; i++){
-                    mongoose.model('EnigmaAnswer').find({_id : enigmas[i]._id}, function(err,answersFound){
+                    console.log(enigmasFound[i]);
+                    mongoose.model('EnigmaAnswer').find({enigmaId : enigmasFound[i]._id}, function(err,answersFound){
                         if (err){
                             console.log("Could not find enigmaAnswer for answer " + i);
                         } else {
-                            finalTab.push({enigma : enigmas[i], answers: answersFound});;
+                            finalTab.push({enigma : enigmasFound[i], answers: answersFound});
+                            console.log(answersFound)
+                            console.log(finalTab)
                             if(finalTab.length == tabLength){
                                 res.format({
                                     //JSON response will show all blobs in JSON format
