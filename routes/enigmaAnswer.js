@@ -54,11 +54,6 @@ router.route('/enigmaAnswer')
                 }
                 else{
                     console.log("EnigmaAnswer "+ enigmaAnswer +" update "+ valid);
-                    if (valid) {
-                        io.sockets.in(model.team).emit('response-enigma', 'ok');
-                    } else {
-                        io.sockets.in(model.team).emit('response-enigma', 'ko');
-                    }
                 }
             })
     });

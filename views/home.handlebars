@@ -7,8 +7,8 @@
   crossorigin="anonymous"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script type="text/javascript">
-    // var SERVER = "http://localhost:8080";
-    var SERVER = "https://treasure-hunt-pns.herokuapp.com/";
+    var SERVER = "http://localhost:8080";
+    // var SERVER = "https://treasure-hunt-pns.herokuapp.com/";
 
     // Init map
     var map = L.map('map').setView([43.6203152, 7.0656119], 15);
@@ -43,7 +43,7 @@
     var socket = io.connect(SERVER +'');
     socket.emit('serverConnect');
 
-    // socket.emit('sendAnswer', {id: "Team1", data:{enigmaId:"5889cb40fbca7d173db3c9a3", answer:"amzdk"}})
+    // socket.emit('sendAnswer', {id: "Team1", data:{enigmeId:"5889cb40fbca7d173db3c9a3", answer:"amzdk"}})
 
     var markers = [];
     socket.on('userPosition', function(data) {
@@ -59,14 +59,14 @@
     });
 
     // Init enigma answer
-    var xhr = new XMLHttpRequest();
+    var xhr2 = new XMLHttpRequest();
 
-    xhr.open("GET", SERVER +"/enigmaAnswer", true);
-    xhr.send(null);
+    xhr2.open("GET", SERVER +"/enigmaAnswer", true);
+    xhr2.send(null);
 
-    xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-            var enigmaAnswer = JSON.parse(xhr.responseText);
+    xhr2.onreadystatechange = function() {
+    if (xhr2.readyState == 4 && (xhr2.status == 200 || xhr2.status == 0)) {
+            var enigmaAnswer = JSON.parse(xhr2.responseText);
             enigmaAnswer.forEach(function(data) {
                 var enigma = data.enigma;
                 var answers = data.answers;
@@ -87,17 +87,19 @@
                     .text("Valider")
                     .click(function(ev) {
                         data = "enigmaAnswer="+answer._id+"&validated=true"
-                        xhr.open("POST", SERVER +"/enigmaAnswer", true);
-                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xhr.send(data);
+                        xhr2.open("POST", SERVER +"/enigmaAnswer", true);
+                        xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr2.send(data);
+                        socket.emit('enigmaValidated', {enigmaAnswer: answer._id, validated: true});
                     });
                     var btnDeny = $('<button/>')
                     .text("Refuser")
                     .click(function(ev) {
                         data = "enigmaAnswer="+answer._id+"&validated=false"
-                        xhr.open("POST", SERVER +"/enigmaAnswer", true);
-                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xhr.send(data);
+                        xhr2.open("POST", SERVER +"/enigmaAnswer", true);
+                        xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr2.send(data);
+                        socket.emit('enigmaValidated', {enigmaAnswer: answer._id, validated: false});
                     });
                     enigmaDiv.append(btnAccept);
                     enigmaDiv.append(btnDeny);

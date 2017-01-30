@@ -18,7 +18,6 @@ exports = module.exports = function(socket){
                     if (err) {
                         return console.error(err);
                     } else {
-                        console.log("Teams found" + inspect(teams));
                         var team = teams[0];
                         var enigmasDone = team.enigmasDone;
 

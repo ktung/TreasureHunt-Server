@@ -7,7 +7,7 @@ exports = module.exports = function(socket){
         
         var teamName = data.id;
 
-        var enigmaId = data.data.enigmaId;
+        var enigmaId = data.data.enigmeId;
         var image = data.data.image;
         var answer = data.data.answer;
 
@@ -21,7 +21,7 @@ exports = module.exports = function(socket){
             if (err) {
                 console.log(err);
             } else {
-                console.log('EnigmaAnswer created')
+                console.log('EnigmaAnswer '+ answer._id +' created')
             }
         })
         // var rand = Math.floor((Math.random() * 10) + 1);
@@ -30,6 +30,27 @@ exports = module.exports = function(socket){
         // } else {
         //     socket.emit('response-enigma', 'ko');
         // }
-        // {"enigmaId": "5889cb40fbca7d173db3c9a3"}
+    });
+
+    socket.on('enigmaValidated', function (data) {
+        mongoose.model('EnigmaAnswer').findById(data.enigmaAnswer, function(err, model) {
+            mongoose.model('Player').find({team : model.team}, function(err, players){
+                if (err){
+                    console.log(err);
+                } else {
+                    for (var i = 0; i < players.length; ++i) {
+                        var player = players[i];
+                        console.log("PLAYER SID "+ inspect(player.socketId));
+                        if (data.validated) {
+                            var socket2 = socket.to(player.socketId);
+                            socket2.emit('response-enigma', 'ok');
+                        } else {
+                            var socket2 = socket.to(player.socketId);
+                            socket2.emit('response-enigma', 'ko');
+                        }
+                    }
+                }
+            })
+        })
     });
 };
