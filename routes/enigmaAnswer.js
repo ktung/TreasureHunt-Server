@@ -12,24 +12,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 router.route('/enigmaAnswer')
     .get(function(req, res){
         res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-        // var enigmas;
         mongoose.model('Enigma').find({}, function (err, enigmasFound){
             if (err) {
                 console.log("Could not retrieve enigmas enigmaAnswerRoute")
             } else{
-                // enigmas = enigmasFound; // Tableau avec toutes les enigmes
                 var tabLength = enigmasFound.length;
                 var finalTab = [];
 
                 for(var i= 0; i < tabLength; i++){
-                    console.log(enigmasFound[i]);
-                    mongoose.model('EnigmaAnswer').find({enigmaId : enigmasFound[i]._id}, function(err,answersFound){
+                    var enig = enigmasFound[i];
+                    mongoose.model('EnigmaAnswer').find({enigmaId : enigmasFound[i]._id, validated: false}, function(err,answersFound){
                         if (err){
                             console.log("Could not find enigmaAnswer for answer " + i);
                         } else {
-                            finalTab.push({enigma : enigmasFound[i], answers: answersFound});
-                            console.log(answersFound)
-                            console.log(finalTab)
+                            finalTab.push({enigma : enig, answers: answersFound});
                             if(finalTab.length == tabLength){
                                 res.format({
                                     //JSON response will show all blobs in JSON format
@@ -43,60 +39,22 @@ router.route('/enigmaAnswer')
                 }
             }
         })
+    })
+    .post(function(req, res){
+        var enigmaAnswer = req.body.enigmaAnswer;
+        var valid = req.body.validated;
+        mongoose.model('EnigmaAnswer').findByIdAndUpdate(
+            enigmaAnswer,
+            {validated: valid}, 
+            null,
+            function(err, model){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log("EnigmaAnswer "+ enigmaAnswer +" updade "+ valid)
+                }
+            })
     });
 
-/*router.route('/enigmaAnswer')
- .get(function(req, res) {
- res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-
- var p1 = new Promise(function(resolve, reject) {
- mongoose.model('EnigmaAnswer').find({validated:false}, function (err, enigmasAnswer) {
- if (err) {
- return console.error(err);
- } else {
- var p2 = new Promise(function(resolve, reject) {
- var response = [];
-
- var i = 0;
- console.log(i)
- console.log(enigmasAnswer.length)
- async.whilst(function() {
- i < enigmasAnswer.length
- }, function(next) {
- console.log(i)
- var answer = enigmasAnswer[i];
- if (null != answer.enigmaId) {
- response.push("lfsj")
- mongoose.model('Enigma')
- .findById(answer.enigmaId, function(err, enigma) {
- console.log(response)
- });
- }
-
- ++i;
- next();
- }, function(err) {
- resolve(response);
- })
- });
- p2.then(function(data) {
- resolve(data);
- }).catch(function(err) {
- console.log("Error promise : "+ err)
- })
- }
-
- });
- });
- p1.then(function(data) {
- res.format({
- json: function(){
- res.json(data);
- }
- });
- }).catch(function() {
- console.log("Erreur promise")
- });
- });
- */
 module.exports = router;

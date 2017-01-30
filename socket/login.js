@@ -16,6 +16,7 @@ exports = module.exports = function(io){
 
         socket.on('newUser', function (data) {
             console.log('socket newUser'+ inspect(data));
+            socket.join(data.team);
             handleConnection(data.name, data.team, socket);
         });
 

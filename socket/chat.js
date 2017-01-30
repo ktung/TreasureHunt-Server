@@ -5,6 +5,7 @@ exports = module.exports = function(socket, io){
     socket.on('newMessage', function (data) {
         console.log('socket newMessage'+ inspect(data));
 
-        io.sockets.emit('newMessage', data);
+        io.sockets.in(data.id).emit('newMessage', data);
+        // io.sockets.emit('newMessage', data);
     });
 };
