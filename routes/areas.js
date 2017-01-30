@@ -21,12 +21,6 @@ router.route('/areas')
                 return console.error(err);
             } else {
                 res.format({
-                    // html: function(){
-                    //     res.render('areas', {
-                    //         title: 'All my Areas',
-                    //         "areas" : areas
-                    //     });
-                    // },
                     //JSON response will show all blobs in JSON format
                     json: function(){
                         res.json(areas);
@@ -51,10 +45,6 @@ router.route('/areas')
             } else {
                 console.log('POST creating new area: ' + area);
                 res.format({
-                    // html: function(){
-                    //     res.location("areas");
-                    //     res.redirect("/areas");
-                    // },
                     //JSON response will show the newly created area
                     json: function(){
                         res.json(area);

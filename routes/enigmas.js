@@ -65,7 +65,6 @@ router.route('/enigmas')
                             console.log("Added EN to AR: ")
                         }
                     })
-               // mongoose.model('Area').update({ _id: area }, { $push: { enigmas: enigma._id }});
 
                 res.format({
                     json: function(){

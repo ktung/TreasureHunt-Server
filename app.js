@@ -6,7 +6,8 @@ var express = require('express'),
     db = require('./models/db'),
     area = require('./models/areas'),
     team = require('./models/teams'),
-    enigma = require('./models/enigmas');
+    enigma = require('./models/enigmas'),
+    enigmaAnswer = require('./models/enigmaAnswer');
 
 var app = express();
 var server = require('http').createServer(app);
@@ -26,13 +27,15 @@ app.use(function(request, response, next) {
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-var routes = require('./routes/index');
+var indexRoute = require('./routes/index');
 var areas = require('./routes/areas');
 var enigmas = require('./routes/enigmas');
+var enigmaAnswer = require('./routes/enigmaAnswer');
 
-app.use('/', routes);
+app.use('/', indexRoute);
 app.use('/', areas);
 app.use('/', enigmas);
+app.use('/', enigmaAnswer);
 
 var port = process.env.PORT || 8080;
 server.listen(port, function () {

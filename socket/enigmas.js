@@ -63,9 +63,8 @@ exports = module.exports = function(socket){
 
     });
 
-    socket.on('enigma')
-
     socket.on('enigmaAnswer', function (data){
+        console.log('socket enigmaAnswer'+ inspect(data));
         var teamName = data.id;
 
         var enigmaId = data.data.enigmaId;
@@ -80,14 +79,9 @@ exports = module.exports = function(socket){
             image: image
         }, function (err, answer) {
             if (err) {
-                res.send("There was a problem adding the information to the database.");
                 console.log(err);
             } else {
-                res.format({
-                    json: function(){
-                        res.json(answer);
-                    }
-                });
+                console.log('EnigmaAnswer created')
             }
         })
     });

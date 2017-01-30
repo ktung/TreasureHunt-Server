@@ -1,4 +1,5 @@
 <div id="map"></div>
+<div id="enigmaAnswer"></div>
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script type="text/javascript">
@@ -35,6 +36,13 @@
     var socket = io.connect('http://localhost:8080');
     socket.emit('serverConnect');
 
+    // var data = {
+    //     'enigmaId': '5889cb40fbca7d173db3c9a3',
+    //     'image': 'ekdjfkejz',
+    //     'answer': 'cocou'
+    // }
+    // socket.emit('enigmaAnswer', {'id': 'Team1', 'data': data})
+
     var markers = [];
     socket.on('userPosition', function(data) {
         console.log("position" + data)
@@ -47,4 +55,19 @@
         marker.bindPopup("Team <b>"+ data.id +"</b>")
         markers[data.id] = marker;
     });
+
+    // Init enigma answer
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "http://localhost:8080/enigmaAnswer", true);
+    xhr.send(null);
+
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+            var enigmaAnswer = JSON.parse(xhr.responseText);
+            enigmaAnswer.forEach(function(answer) {
+                console.log(answer)
+            });
+        }
+    };
 </script>
