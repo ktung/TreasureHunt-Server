@@ -31,7 +31,7 @@ app.set('view engine', 'handlebars');
 var indexRoute = require('./routes/index');
 var areas = require('./routes/areas');
 var enigmas = require('./routes/enigmas');
-var enigmaAnswer = require('./routes/enigmaAnswer');
+var enigmaAnswer = require('./routes/enigmaAnswer')(io);
 
 app.use('/', indexRoute);
 app.use('/', areas);

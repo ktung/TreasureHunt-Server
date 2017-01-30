@@ -2,13 +2,14 @@ var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
     bodyParser = require("body-parser"),
-    async = require("async");
+    io = require("socket.io")
 var inspect = require('util').inspect;
 app = express(); //mongo connection
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+module.exports = function(io) {
 router.route('/enigmaAnswer')
     .get(function(req, res){
         res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
@@ -52,9 +53,15 @@ router.route('/enigmaAnswer')
                     console.log(err);
                 }
                 else{
-                    console.log("EnigmaAnswer "+ enigmaAnswer +" updade "+ valid)
+                    console.log("EnigmaAnswer "+ enigmaAnswer +" update "+ valid);
+                    if (valid) {
+                        io.sockets.in(model.team).emit('response-enigma', 'ok');
+                    } else {
+                        io.sockets.in(model.team).emit('response-enigma', 'ko');
+                    }
                 }
             })
     });
 
-module.exports = router;
+    return router;
+}
