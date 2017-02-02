@@ -45,15 +45,19 @@ exports = module.exports = function(socket, io){
                                     return console.error(err);
                                 } else {
                                     var score = 0;
+                                    var treated = 0;
                                     var enigmas = team.enigmasDone;
 
-                                    enigmas.forEach(function(enigma) {
+                                    for (var i = 0; i < enigmas.length; ++i) {
+                                        var enigma = enigmas[i];
                                         mongoose.model('Enigma').findById(enigma, function (err, eg) {
-                                            score += eg.points;
+                                            score += 10;
+                                            treated++;
+                                            if(treated == enigmas.length){
+                                                socket.emit('responseScore', score);
+                                            }
                                         });
-                                    });
-
-                                    io.sockets.in(teamName).emit('responseScore', score);
+                                    }
                                 }
                             });
                         } else {
