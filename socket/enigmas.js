@@ -22,12 +22,19 @@ exports = module.exports = function(socket){
                         var enigmasDone = team.enigmasDone;
 
                         // @TODO VERIFY IF THE COMPARISON IS CORRECTLY DONE
-                        enigmas.forEach(function(enigma) {
+                        for (var i = 0; i < enigmas.length; i++){
+                            if (enigmasDone.indexOf(enigmas[i]._id) === -1){
+                                socket.emit('enigmaRequest', enigmas[i]);
+                                break
+                            }
+                        }
+
+                        /*enigmas.forEach(function(enigma) {
                             if (enigmasDone.indexOf(enigma._id) === -1){
                                 socket.emit('enigmaRequest', enigma);
                                 return;
                             }
-                        })
+                        })*/
                     }
                 })
             }
