@@ -29,6 +29,10 @@ exports = module.exports = function(socket){
                             }
                         }
 
+                        if(enigmas.length == enigmasDone.length){
+                            socket.emit('noEnigma', "No more enigma");
+                        }
+
                         /*enigmas.forEach(function(enigma) {
                             if (enigmasDone.indexOf(enigma._id) === -1){
                                 socket.emit('enigmaRequest', enigma);
