@@ -19,7 +19,7 @@ exports = module.exports = function(socket){
                     });
                 });
 
-                socket.emit('responseScore', {result: score});
+                socket.emit('responseScore', score);
             }
         });
     });
