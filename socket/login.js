@@ -30,6 +30,7 @@ exports = module.exports = function(io){
         require('./position.js')(socket);
         require('./answer.js')(socket);
         require('./chat.js')(socket, io);
+        require('./score.js')(socket);
     });
 };
 

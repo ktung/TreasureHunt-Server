@@ -1,0 +1,24 @@
+var mongoose = require('mongoose');
+var inspect = require('util').inspect;
+
+exports = module.exports = function(socket){
+    socket.on('askScore', function(data) {
+        console.log('socket askScore '+ inspect(data));
+
+        var teamId = data.id;
+        mongoose.model('Team').findById(teamId, function (err, team) {
+            if (err) {
+                return console.error(err);
+            } else {
+                var score = 0;
+                team.enigmasDone.forEach(function(enigma) {
+                    mongoose.model('Enigma').findById(enigma, function (err, eg) {
+                        score += eg.points;
+                    });
+                });
+
+                socket.emit('responseScore', score);
+            }
+        });
+    });
+};
