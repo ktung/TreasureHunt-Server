@@ -27,8 +27,8 @@ exports = module.exports = function(socket){
     });
 
     socket.on('enigmaValidated', function (data) {
-        mongoose.model('EnigmaAnswer').findById(data.enigmaAnswer, function(err, model) {
-            mongoose.model('Player').find({team : model.team}, function(err, players){
+        mongoose.model('EnigmaAnswer').findById(data.enigmaAnswer, function(err, enigmaAnswer) {
+            mongoose.model('Player').find({team : enigmaAnswer.team}, function(err, players){
                 if (err){
                     console.log(err);
                 } else {
@@ -36,9 +36,11 @@ exports = module.exports = function(socket){
                         var player = players[i];
                         console.log("PLAYER SID "+ inspect(player.socketId));
                         if (data.validated) {
+                            enigmaAnswer.update({'validated': true});
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ok');
                         } else {
+                            enigmaAnswer.remove();
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ko');
                         }
