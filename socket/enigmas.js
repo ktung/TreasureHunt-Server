@@ -21,7 +21,6 @@ exports = module.exports = function(socket){
                         var team = teams[0];
                         var enigmasDone = team.enigmasDone;
 
-                        // @TODO VERIFY IF THE COMPARISON IS CORRECTLY DONE
                         for (var i = 0; i < enigmas.length; i++){
                             if (enigmasDone.indexOf(enigmas[i]._id) === -1){
                                 socket.emit('enigmaRequest', enigmas[i]);
@@ -32,13 +31,6 @@ exports = module.exports = function(socket){
                         if(enigmas.length == enigmasDone.length){
                             socket.emit('noEnigma', "No more enigma");
                         }
-
-                        /*enigmas.forEach(function(enigma) {
-                            if (enigmasDone.indexOf(enigma._id) === -1){
-                                socket.emit('enigmaRequest', enigma);
-                                return;
-                            }
-                        })*/
                     }
                 })
             }

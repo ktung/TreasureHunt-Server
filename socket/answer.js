@@ -37,6 +37,25 @@ exports = module.exports = function(socket){
                             enigmaAnswer.update({'validated': true});
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ok');
+
+                            // emit score
+                            var teamName = player.team;
+                            mongoose.model('Team').findOne({name: teamName}, function (err, team) {
+                                if (err) {
+                                    return console.error(err);
+                                } else {
+                                    var score = 0;
+                                    var enigmas = team.enigmasDone;
+
+                                    enigmas.forEach(function(enigma) {
+                                        mongoose.model('Enigma').findById(enigma, function (err, eg) {
+                                            score += eg.points;
+                                        });
+                                    });
+
+                                    io.sockets.in(teamName).emit('responseScore', score);
+                                }
+                            });
                         } else {
                             mongoose.model('EnigmaAnswer').find({ _id: data.enigmaAnswer }).remove().exec();
                             var socket2 = socket.to(player.socketId);
