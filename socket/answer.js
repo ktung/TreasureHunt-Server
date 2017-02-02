@@ -51,12 +51,15 @@ exports = module.exports = function(socket, io){
                                     for (var i = 0; i < enigmas.length; ++i) {
                                         var enigma = enigmas[i];
                                         mongoose.model('Enigma').findById(enigma, function (err, eg) {
-                                            score += 10;
+                                            score += eg.points;
                                             treated++;
                                             if(treated == enigmas.length){
                                                 socket.emit('responseScore', score);
                                             }
                                         });
+                                    }
+                                    if (enigmas.length == 0){
+                                        socket.emit("responseScore", score);
                                     }
                                 }
                             });
