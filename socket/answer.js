@@ -24,12 +24,6 @@ exports = module.exports = function(socket){
                 console.log('EnigmaAnswer '+ answer._id +' created')
             }
         })
-        // var rand = Math.floor((Math.random() * 10) + 1);
-        // if (rand > 4) {
-        //     socket.emit('response-enigma', 'ok');
-        // } else {
-        //     socket.emit('response-enigma', 'ko');
-        // }
     });
 
     socket.on('enigmaValidated', function (data) {

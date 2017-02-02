@@ -60,29 +60,5 @@ exports = module.exports = function(socket){
                 });
             }
         });
-
     });
-
-    // socket.on('enigmaAnswer', function (data){
-    //     console.log('socket enigmaAnswer'+ inspect(data));
-    //     var teamName = data.id;
-
-    //     var enigmaId = data.data.enigmaId;
-    //     var image = data.data.image;
-    //     var answer = data.data.answer;
-
-    //     mongoose.model('EnigmaAnswer').create({
-    //         team: teamName,
-    //         validated: false,
-    //         enigmaId: enigmaId,
-    //         answer: data.data.answer,
-    //         image: image
-    //     }, function (err, answer) {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             console.log('EnigmaAnswer created')
-    //         }
-    //     })
-    // });
 };
