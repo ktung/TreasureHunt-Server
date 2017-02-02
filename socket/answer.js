@@ -48,3 +48,5 @@ exports = module.exports = function(socket){
         })
     });
 };
+
+mongoose.model('EnigmaAnswer').findById(data.enigmaAnswer).remove().exec();
