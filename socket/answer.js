@@ -4,19 +4,17 @@ var inspect = require('util').inspect;
 exports = module.exports = function(socket){
     socket.on('sendAnswer', function (data) {
         console.log('socket sendAnswer'+ inspect(data));
-        
+
         var teamName = data.id;
 
         var enigmaId = data.data.enigmeId;
-        var image = data.data.image;
-        var answer = data.data.answer;
 
         mongoose.model('EnigmaAnswer').create({
             team: teamName,
             validated: false,
             enigmaId: enigmaId,
             answer: data.data.answer,
-            image: image
+            image: data.data.photo
         }, function (err, answer) {
             if (err) {
                 console.log(err);

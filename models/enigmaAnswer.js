@@ -7,7 +7,7 @@ var enigmaAnswerSchema = new mongoose.Schema({
     enigmaId: String,
 
     answer: { type: String, required: false},
-    image: { type: Buffer, required: false},
+    image: { type: String, required: false},
 });
 
 mongoose.model('EnigmaAnswer', enigmaAnswerSchema);
