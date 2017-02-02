@@ -40,7 +40,7 @@ exports = module.exports = function(socket){
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ok');
                         } else {
-                            enigmaAnswer.remove();
+                            enigmaAnswer.remove().exec();
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ko');
                         }
