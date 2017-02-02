@@ -98,6 +98,9 @@
                         xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xhr2.send(data);
                         socket.emit('enigmaValidated', {enigmaAnswer: answer._id, validated: true});
+                        answerDiv.remove();
+                        btnDeny.remove();
+                        btnAccept.remove();
                     });
                     var btnDeny = $('<button/>')
                     .text("Refuser")
@@ -107,6 +110,9 @@
                         xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xhr2.send(data);
                         socket.emit('enigmaValidated', {enigmaAnswer: answer._id, validated: false});
+                        answerDiv.remove();
+                        btnDeny.remove();
+                        btnAccept.remove();
                     });
                     enigmaDiv.append(btnAccept);
                     enigmaDiv.append(btnDeny);
