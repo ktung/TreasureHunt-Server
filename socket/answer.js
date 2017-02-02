@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var inspect = require('util').inspect;
 
-exports = module.exports = function(socket){
+exports = module.exports = function(socket, io){
     socket.on('sendAnswer', function (data) {
         console.log('socket sendAnswer'+ inspect(data));
 
