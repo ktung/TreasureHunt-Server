@@ -56,7 +56,7 @@ module.exports = function(io) {
                     else{
                         console.log("EnigmaAnswer "+ enigmaAnswer +" update "+ valid);
 
-                        if (valid == true){
+                        if (valid){
                             var teamName = model.team;
                             var enigmaId = model.enigmaId;
 
