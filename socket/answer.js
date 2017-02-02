@@ -40,7 +40,7 @@ exports = module.exports = function(socket){
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ok');
                         } else {
-                            enigmaAnswer.remove().exec();
+                            mongoose.model('EnigmaAnswer').find({ _id: data.enigmaAnswer }).remove().exec();
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ko');
                         }
