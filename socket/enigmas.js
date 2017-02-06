@@ -72,9 +72,10 @@ var handleEnigma = function(enigmas, enigmasDone, area, socket){
         ++treated;
         mongoose.model('Enigma').findOne({_id: enigma}, function (err, enigmaFound) {
             console.log("\n \n enigmasFound " + enigmaFound.area + " and zoneDone " + zoneDone
-                + " and areaId" +  area._id + "\n \n");
+                + " and areaId " +  area._id + "\n \n");
             if (enigmaFound.area == area._id) {
-                ++zoneDone;
+                console.log("Areas are the same \n");
+                zoneDone+=1;
             }
             if (treated == enigmasDone.length) {
                 console.log("\n \n Current value of treated " + treated + " and zoneDone " + zoneDone
