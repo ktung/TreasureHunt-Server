@@ -21,16 +21,20 @@ exports = module.exports = function(socket){
                         var team = teams[0];
                         var enigmasDone = team.enigmasDone;
 
-                        for (var i = 0; i < enigmas.length; i++){
-                            if (enigmasDone.indexOf(enigmas[i]._id) === -1){
+                        var i
+                        for (var i = 0; i <= enigmas.length; i++){
+                            if (i < enigmas.length && enigmasDone.indexOf(enigmas[i]._id) === -1){
                                 socket.emit('enigmaRequest', enigmas[i]);
                                 break
                             }
+                            if(i == enigmas.length){
+                                socket.emit('noEnigma', "No more enigma");
+                            }
                         }
 
-                        if(enigmas.length == enigmasDone.length){
+                        /*if(enigmas.length == enigmasDone.length){
                             socket.emit('noEnigma', "No more enigma");
-                        }
+                        }*/
                     }
                 })
             }
