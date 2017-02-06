@@ -7,6 +7,11 @@ var express = require('express'),
 module.exports = router;
 
 router.route('/')
-    .get(function(req, res) {
-        res.render('home');
-    });
+.get(function(req, res) {
+    res.render('home');
+});
+
+router.route('/admin')
+.get(function(req, res) {
+    res.render('admin');
+});
