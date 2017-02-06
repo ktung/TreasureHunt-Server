@@ -44,6 +44,10 @@
     var socket = io.connect(SERVER +'');
     socket.emit('serverConnect');
 
+    socket.on('reloadPage', function(){
+        location.reload();
+    });
+
     // socket.emit('sendAnswer', {id: "Team1", data:{enigmeId:"5889cb40fbca7d173db3c9a3", answer:"amzdk"}})
 
     var markers = [];

@@ -22,6 +22,8 @@ exports = module.exports = function(socket, io){
                 console.log('EnigmaAnswer '+ answer._id +' created')
             }
         })
+
+        socket.to(global.positionServerId).emit("reloadPage");
     });
 
     socket.on('enigmaValidated', function (data) {
