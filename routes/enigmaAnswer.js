@@ -20,8 +20,7 @@ module.exports = function(io) {
                     var tabLength = enigmasFound.length;
                     var finalTab = [];
 
-                    for(var i= 0; i < tabLength; i++){
-                        var enig = enigmasFound[i];
+                    enigmasFound.forEach(function(enig){
                         mongoose.model('EnigmaAnswer').find({enigmaId : enig._id, validated: false}, function(err,answersFound){
                             if (err){
                                 console.log("Could not find enigmaAnswer for answer " + i);
@@ -37,7 +36,7 @@ module.exports = function(io) {
                                 }
                             }
                         })
-                    }
+                    })
                 }
             })
         })
