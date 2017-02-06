@@ -69,8 +69,9 @@ var handleEnigma = function(enigmas, enigmasDone, area, socket){
     var treated = 0;
 
     enigmasDone.forEach(function(enigma){
+        ++treated;
         if (enigma.area === area._id){
-            zoneDone++;
+            ++zoneDone;
         }
         if(treated == enigmasDone.length){
             if(zoneDone == enigmas.length){
