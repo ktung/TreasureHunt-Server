@@ -63,7 +63,8 @@
             <input id="points" type="number" name="points" placeholder="Points" required />
 
             <label for="image">Image</label>
-            <input id="image" type="file" name="image" />
+            <input id="image" type="file" />
+            <input id="imageHidden" type="hidden" name="image" />
 
             <label for="area">Area</label>
             <select id="area" name="area"></select>
@@ -124,6 +125,14 @@ if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
         });
     }
 };
+
+document.getElementById('image').addEventListener('change', function() {
+    let reader = new FileReader();
+    reader.onload = function() {
+        document.getElementById('imageHidden').value = this.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
 
 </script>
 </body>
