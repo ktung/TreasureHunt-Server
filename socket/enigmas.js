@@ -48,17 +48,17 @@ exports = module.exports = function(socket){
                 console.log('Enigma :'+ inspect(enigma));
                 var hint = enigma.hint;
                 mongoose.model('Team')
-                .findOneAndUpdate(
-                    { name: teamName },
-                    { $inc: { hintsUsed: 1 } }
-                )
-                .exec(function(err,res) {
-                    if (err) {
-                        console.log("Error");
-                    } else {
-                        socket.emit('responseClue', hint);
-                    }
-                });
+                    .findOneAndUpdate(
+                        { name: teamName },
+                        { $inc: { hintsUsed: 1 } }
+                    )
+                    .exec(function(err,res) {
+                        if (err) {
+                            console.log("Error");
+                        } else {
+                            socket.emit('responseClue', hint);
+                        }
+                    });
             }
         });
     });
@@ -74,6 +74,8 @@ var handleEnigma = function(enigmas, enigmasDone, area, socket){
             ++zoneDone;
         }
         if(treated == enigmasDone.length){
+            console.log("\n \n Current value of treated " + treated + " and zoneDone " + zoneDone
+                + " and enigmasLength " + enigmasDone.length + "\n \n");
             if(zoneDone == enigmas.length){
                 socket.emit('noEnigma', "No more enigma");
             }
