@@ -70,9 +70,9 @@ var handleEnigma = function(enigmas, enigmasDone, area, socket){
 
     enigmasDone.forEach(function(enigma){
         ++treated;
-        console.log("\n \n Current value of enigma.area " + enigma.area + " and areaId " + area._id
+        console.log("\n \n Current value of enigma.area " + enigma + " and areaId " + area._id
              + "\n \n");
-        if (enigma.area === area._id){
+        if (enigma === area._id){
             ++zoneDone;
 
         }
