@@ -20,6 +20,7 @@ exports = module.exports = function(socket){
                         score += eg.points;
                         treated++;
                         if(treated == enigmas.length){
+                            score -= team.hintsUsed;
                             socket.emit('responseScore', score);
                         }
                     });

@@ -22,7 +22,7 @@ module.exports = function(io) {
 
                     for(var i= 0; i < tabLength; i++){
                         var enig = enigmasFound[i];
-                        mongoose.model('EnigmaAnswer').find({enigmaId : enigmasFound[i]._id, validated: false}, function(err,answersFound){
+                        mongoose.model('EnigmaAnswer').find({enigmaId : enig._id, validated: false}, function(err,answersFound){
                             if (err){
                                 console.log("Could not find enigmaAnswer for answer " + i);
                             } else {

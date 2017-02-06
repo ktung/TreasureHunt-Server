@@ -54,6 +54,7 @@ exports = module.exports = function(socket, io){
                                             score += eg.points;
                                             treated++;
                                             if(treated == enigmas.length){
+                                                score -= team.hintsUsed;
                                                 socket.emit('responseScore', score);
                                             }
                                         });
