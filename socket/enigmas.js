@@ -71,6 +71,8 @@ var handleEnigma = function(enigmas, enigmasDone, area, socket){
     enigmasDone.forEach(function(enigma) {
         ++treated;
         mongoose.model('Enigma').findOne({_id: enigma}, function (err, enigmaFound) {
+            console.log("\n \n enigmasFound " + enigmaFound.area + " and zoneDone " + zoneDone
+                + "\n \n");
             if (enigmaFound.area === area._id) {
                 ++zoneDone;
             }
