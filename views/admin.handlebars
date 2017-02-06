@@ -43,7 +43,7 @@
             <label for="radius">Radius</label>
             <input id="radius" type="number" name="radius" placeholder="Radius" value="150" step="10" required />
             
-            <input type="submit" name="Submit" onsubmit="redirect()"/>
+            <input type="submit" name="Submit"/>
         </form>
     </div>
     <div>
@@ -69,7 +69,7 @@
             <label for="area">Area</label>
             <select id="area" name="area"></select>
             
-            <input type="submit" name="Submit" onsubmit="redirect()"/>
+            <input type="submit" name="Submit"/>
         </form>
     </div>
 </div>
@@ -133,11 +133,6 @@ document.getElementById('image').addEventListener('change', function() {
     };
     reader.readAsDataURL(this.files[0]);
 });
-
-function redirect() {
-
-    window.location = "https://treasure-hunt-pns.herokuapp.com/admin";
-}
 
 </script>
 </body>
