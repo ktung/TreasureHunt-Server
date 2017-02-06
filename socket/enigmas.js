@@ -68,20 +68,19 @@ var handleEnigma = function(enigmas, enigmasDone, area, socket){
     var zoneDone = 0;
     var treated = 0;
 
-    enigmasDone.forEach(function(enigma){
+    enigmasDone.forEach(function(enigma) {
         ++treated;
-        console.log("\n \n Current value of enigma.area " + enigma + " and areaId " + area._id
-             + "\n \n");
-        if (enigma === area._id){
-            ++zoneDone;
-
-        }
-        if(treated == enigmasDone.length){
-            console.log("\n \n Current value of treated " + treated + " and zoneDone " + zoneDone
-                + " and enigmasLength " + enigmasDone.length + "\n \n");
-            if(zoneDone == enigmas.length){
-                socket.emit('noEnigma', "No more enigma");
+        mongoose.model('Enigma').findOne({_id: enigma}, function (err, enigmaFound) {
+            if (enigmaFound.area === area._id) {
+                ++zoneDone;
             }
-        }
+            if (treated == enigmasDone.length) {
+                console.log("\n \n Current value of treated " + treated + " and zoneDone " + zoneDone
+                    + " and enigmasLength " + enigmasDone.length + "\n \n");
+                if (zoneDone == enigmas.length) {
+                    socket.emit('noEnigma', "No more enigma");
+                }
+            }
+        })
     })
 };
