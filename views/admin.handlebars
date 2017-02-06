@@ -16,6 +16,7 @@
             width: 100vw;
         }
         #map {
+            width: 100vw !important;
             height: 50vh;
         }
         #tools {
@@ -28,10 +29,11 @@
 <div id="map"></div>
 
 <div id="tools">
+    <a href=".">Home</a>
     <div>
         <h1>Creating area</h1>
 
-        <form method="post" action="http://localhost:8080/areas">
+        <form method="post" action="https://treasure-hunt-pns.herokuapp.com/areas">
             <label for="latitude">Latitude</label>
             <input id="latitude" type="number" name="latitude" placeholder="Latitude" step="any" required />
 
@@ -47,7 +49,7 @@
     <div>
         <h1>Creating enigma</h1>
 
-        <form method="post" action="http://localhost:8080/enigmas">
+        <form method="post" action="https://treasure-hunt-pns.herokuapp.com/enigmas">
             <label for="name">Name</label>
             <input id="name" type="text" name="name" placeholder="Name" required />
 
@@ -84,8 +86,8 @@ if (navigator.geolocation) {
     console.log('navigator.geolocation not available');
 }
 
-const SERVER = "http://localhost:8080";
-// const SERVER = "https://treasure-hunt-pns.herokuapp.com";
+// const SERVER = "http://localhost:8080";
+const SERVER = "https://treasure-hunt-pns.herokuapp.com";
 // Init map
 const map = L.map('map').setView([43.6203152, 7.0656119], 15);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
