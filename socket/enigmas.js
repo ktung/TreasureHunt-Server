@@ -21,20 +21,14 @@ exports = module.exports = function(socket){
                         var team = teams[0];
                         var enigmasDone = team.enigmasDone;
 
-                        var i
-                        for (var i = 0; i <= enigmas.length; i++){
-                            if (i < enigmas.length && enigmasDone.indexOf(enigmas[i]._id) === -1){
+                        for (var i = 0; i < enigmas.length; i++){
+                            if (enigmasDone.indexOf(enigmas[i]._id) === -1){
                                 socket.emit('enigmaRequest', enigmas[i]);
                                 break
                             }
-                            if(i == enigmas.length){
-                                socket.emit('noEnigma', "No more enigma");
-                            }
                         }
 
-                        /*if(enigmas.length == enigmasDone.length){
-                            socket.emit('noEnigma', "No more enigma");
-                        }*/
+                        handleEnigma(enigmas,enigmasDone,area,socket);
                     }
                 })
             }
@@ -68,4 +62,20 @@ exports = module.exports = function(socket){
             }
         });
     });
+};
+
+var handleEnigma = function(enigmas, enigmasDone, area, socket){
+    var zoneDone = 0;
+    var treated = 0;
+
+    enigmasDone.forEach(function(enigma){
+        if (enigma.area === area._id){
+            zoneDone++;
+        }
+        if(treated == enigmasDone.length){
+            if(zoneDone == enigmas.length){
+                socket.emit('noEnigma', "No more enigma");
+            }
+        }
+    })
 };
