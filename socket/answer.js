@@ -27,7 +27,7 @@ exports = module.exports = function(socket, io){
     });
 
     socket.on('enigmaValidated', function (data) {
-        mongoose.model('EnigmaAnswer').findById(data.enigmaAnswer, function(err, enigmaAnswer) {
+        mongoose.model('EnigmaAnswer').findByIdAndUpdate(data.enigmaAnswer, {validated: data.validated}, null, function(err, enigmaAnswer) {
             mongoose.model('Player').find({team : enigmaAnswer.team}, function(err, players){
                 if (err){
                     console.log(err);
