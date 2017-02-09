@@ -32,13 +32,14 @@ exports = module.exports = function(socket, io){
                 if (err){
                     console.log(err);
                 } else {
-                    for (var i = 0; i < players.length; ++i) {
-                        var player = players[i];
-                        console.log("PLAYER SID "+ inspect(player.socketId));
                         if (data.validated) {
                             enigmaAnswer.update({'validated': true});
-                            var socket2 = socket.to(player.socketId);
-                            socket2.emit('response-enigma', 'ok');
+                            for (var i = 0; i < players.length; ++i) {
+                                var player = players[i];
+                                console.log("PLAYER SID "+ inspect(player.socketId));
+                                var socket2 = socket.to(player.socketId);
+                                socket2.emit('response-enigma', 'ok');
+                            }
 
                             var teamName = enigmaAnswer.team;
                             var enigmaId = enigmaAnswer.enigmaId;
@@ -55,7 +56,6 @@ exports = module.exports = function(socket, io){
                                 });
 
                             // emit score
-                            var teamName = player.team;
                             mongoose.model('Team').findOne({name: teamName}, function (err, team) {
                                 if (err) {
                                     return console.error(err);
@@ -82,8 +82,12 @@ exports = module.exports = function(socket, io){
                             });
                         } else {
                             mongoose.model('EnigmaAnswer').find({ _id: data.enigmaAnswer }).remove().exec();
-                            var socket2 = socket.to(player.socketId);
-                            socket2.emit('response-enigma', 'ko');
+                            for (var i = 0; i < players.length; ++i) {
+                                var player = players[i];
+                                console.log("PLAYER SID "+ inspect(player.socketId));
+                                var socket2 = socket.to(player.socketId);
+                                socket2.emit('response-enigma', 'ko');
+                            }
                         }
                     }
                 }
