@@ -59,7 +59,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 	<script type="text/javascript">
-		var app = angular.module('myApp', []);
+		var app = angular.module('myApp', [])
+		.config(function($interpolateProvider){
+		    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+		});;
+
 
 		app.factory('socketFactory', function($rootScope){
 
@@ -154,9 +158,9 @@
 	<div class="chat col-xs-12">
 		<div id="messages" class="messages">
 			<div ng-repeat="message in chatFactory.messages | filter: teamFilter" class="message" ng-class="{received: (message.message.user != myName), sent: (message.message.user == myName)}">
-				<div class="message-name">{{message.message.user}}</div>
+				<div class="message-name">{[{message.message.user}]}</div>
 				<div class="message-content">
-					{{message.message.content}}
+					{[{message.message.content}]}
 				</div>
 			</div>
 		</div>
@@ -173,7 +177,7 @@
 		<span ng-show="chatFactory.team.length > 0">Equipes :</span>
 		<label ng-repeat="team in chatFactory.team">
 			<input type="radio" ng-model="$parent.teamFilter" ng-value="team">
-			{{team}}
+			{[{team}]}
 		</label>
 	</div>
 </body>
