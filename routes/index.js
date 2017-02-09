@@ -8,10 +8,10 @@ module.exports = router;
 
 router.route('/')
 .get(function(req, res) {
-    res.render('home');
+    res.render('home', {'envport': process.env.PORT});
 });
 
 router.route('/admin')
 .get(function(req, res) {
-    res.render('admin');
+    res.render('admin', {'envport': process.env.PORT});
 });

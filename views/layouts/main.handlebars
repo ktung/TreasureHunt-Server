@@ -30,8 +30,11 @@
         }
     </style>
     <script type="text/javascript">
+    {{#if envport}}
+        var SERVER = "https://treasure-hunt-pns.herokuapp.com";
+    {{else}}
         var SERVER = "http://localhost:8080";
-        // var SERVER = "https://treasure-hunt-pns.herokuapp.com";
+    {{/if}}
     </script>
 </head>
 <body>
