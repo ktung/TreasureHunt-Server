@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Chat</title>
-	<style type="text/css">
+<style type="text/css">
 		.messages {
 			padding-right: 10px;
 			height: calc(100vh - 150px);
@@ -57,12 +57,15 @@
 	</style>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript" src="socket.io-client/dist/socket.io.min.js"></script>
 	<script type="text/javascript">
 		var app = angular.module('myApp', []);
 
 		app.factory('socketFactory', function($rootScope){
-    		var socket = io(SERVER);
+
+    		// var socket = io('http://localhost:8080');
+    		// var socket = io('http://10.212.99.100:8080');
+    		var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
     		socket.emit('chatAdmin');
 
