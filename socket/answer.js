@@ -40,6 +40,20 @@ exports = module.exports = function(socket, io){
                             var socket2 = socket.to(player.socketId);
                             socket2.emit('response-enigma', 'ok');
 
+                            var teamName = enigmaAnswer.team;
+                            var enigmaId = enigmaAnswer.enigmaId;
+
+                            mongoose.model('Team').findOneAndUpdate({name: teamName},
+                                {$push: {enigmasDone: enigmaId}},
+                                null,
+                                function (err,res){
+                                    if(err) {
+                                        console.log("Could not update team")
+                                    } else {
+                                        console.log("Success add already done enigmas for team")
+                                    }
+                                });
+
                             // emit score
                             var teamName = player.team;
                             mongoose.model('Team').findOne({name: teamName}, function (err, team) {

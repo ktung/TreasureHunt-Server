@@ -98,10 +98,10 @@
                     var btnAccept = $('<button/>')
                     .text("Valider")
                     .click(function(ev) {
-                        data = "enigmaAnswer="+answer._id+"&validated=true"
-                        xhr2.open("POST", SERVER +"/enigmaAnswer", true);
-                        xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xhr2.send(data);
+                        // data = "enigmaAnswer="+answer._id+"&validated=true"
+                        // xhr2.open("POST", SERVER +"/enigmaAnswer", true);
+                        // xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        // xhr2.send(data);
                         socket.emit('enigmaValidated', {enigmaAnswer: answer._id, validated: true});
                         answerDiv.remove();
                         btnDeny.remove();
@@ -110,10 +110,10 @@
                     var btnDeny = $('<button/>')
                     .text("Refuser")
                     .click(function(ev) {
-                        data = "enigmaAnswer="+answer._id+"&validated=false"
-                        xhr2.open("POST", SERVER +"/enigmaAnswer", true);
-                        xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xhr2.send(data);
+                        // data = "enigmaAnswer="+answer._id+"&validated=false"
+                        // xhr2.open("POST", SERVER +"/enigmaAnswer", true);
+                        // xhr2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        // xhr2.send(data);
                         socket.emit('enigmaValidated', {enigmaAnswer: answer._id, validated: false});
                         answerDiv.remove();
                         btnDeny.remove();

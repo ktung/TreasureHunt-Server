@@ -40,7 +40,7 @@ module.exports = function(io) {
                 }
             })
         })
-        .post(function(req, res){
+        /*.post(function(req, res){
             var enigmaAnswer = req.body.enigmaAnswer;
             var valid = req.body.validated;
 
@@ -73,7 +73,7 @@ module.exports = function(io) {
                     }
                 })
 
-        });
+        });*/
 
     return router;
 }
