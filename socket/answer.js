@@ -32,62 +32,61 @@ exports = module.exports = function(socket, io){
                 if (err){
                     console.log(err);
                 } else {
-                        if (data.validated) {
-                            enigmaAnswer.update({'validated': true});
-                            for (var i = 0; i < players.length; ++i) {
-                                var player = players[i];
-                                console.log("PLAYER SID "+ inspect(player.socketId));
-                                var socket2 = socket.to(player.socketId);
-                                socket2.emit('response-enigma', 'ok');
-                            }
+                    if (data.validated) {
+                        enigmaAnswer.update({'validated': true});
+                        for (var i = 0; i < players.length; ++i) {
+                            var player = players[i];
+                            console.log("PLAYER SID "+ inspect(player.socketId));
+                            var socket2 = socket.to(player.socketId);
+                            socket2.emit('response-enigma', 'ok');
+                        }
 
-                            var teamName = enigmaAnswer.team;
-                            var enigmaId = enigmaAnswer.enigmaId;
+                        var teamName = enigmaAnswer.team;
+                        var enigmaId = enigmaAnswer.enigmaId;
 
-                            mongoose.model('Team').findOneAndUpdate({name: teamName},
-                                {$push: {enigmasDone: enigmaId}},
-                                null,
-                                function (err,res){
-                                    if(err) {
-                                        console.log("Could not update team")
-                                    } else {
-                                        console.log("Success add already done enigmas for team")
-                                    }
-                                });
-
-                            // emit score
-                            mongoose.model('Team').findOne({name: teamName}, function (err, team) {
-                                if (err) {
-                                    return console.error(err);
+                        mongoose.model('Team').findOneAndUpdate({name: teamName},
+                            {$push: {enigmasDone: enigmaId}},
+                            null,
+                            function (err,res){
+                                if(err) {
+                                    console.log("Could not update team")
                                 } else {
-                                    var score = 0;
-                                    var treated = 0;
-                                    var enigmas = team.enigmasDone;
-
-                                    for (var i = 0; i < enigmas.length; ++i) {
-                                        var enigma = enigmas[i];
-                                        mongoose.model('Enigma').findById(enigma, function (err, eg) {
-                                            score += eg.points;
-                                            treated++;
-                                            if(treated == enigmas.length){
-                                                score -= team.hintsUsed;
-                                                socket.emit('responseScore', score);
-                                            }
-                                        });
-                                    }
-                                    if (enigmas.length == 0){
-                                        socket.emit("responseScore", score);
-                                    }
+                                    console.log("Success add already done enigmas for team")
                                 }
                             });
-                        } else {
-                            mongoose.model('EnigmaAnswer').find({ _id: data.enigmaAnswer }).remove().exec();
-                            for (var i = 0; i < players.length; ++i) {
-                                var player = players[i];
-                                console.log("PLAYER SID "+ inspect(player.socketId));
-                                var socket2 = socket.to(player.socketId);
-                                socket2.emit('response-enigma', 'ko');
+
+                        // emit score
+                        mongoose.model('Team').findOne({name: teamName}, function (err, team) {
+                            if (err) {
+                                return console.error(err);
+                            } else {
+                                var score = 0;
+                                var treated = 0;
+                                var enigmas = team.enigmasDone;
+
+                                for (var i = 0; i < enigmas.length; ++i) {
+                                    var enigma = enigmas[i];
+                                    mongoose.model('Enigma').findById(enigma, function (err, eg) {
+                                        score += eg.points;
+                                        treated++;
+                                        if(treated == enigmas.length){
+                                            score -= team.hintsUsed;
+                                            socket.emit('responseScore', score);
+                                        }
+                                    });
+                                }
+                                if (enigmas.length == 0){
+                                    socket.emit("responseScore", score);
+                                }
                             }
+                        });
+                    } else {
+                        mongoose.model('EnigmaAnswer').find({ _id: data.enigmaAnswer }).remove().exec();
+                        for (var i = 0; i < players.length; ++i) {
+                            var player = players[i];
+                            console.log("PLAYER SID "+ inspect(player.socketId));
+                            var socket2 = socket.to(player.socketId);
+                            socket2.emit('response-enigma', 'ko');
                         }
                     }
                 }
