@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+	<style type="text/css">
+		.messages {
+			padding-right: 10px;
+			height: calc(100vh - 150px);
+			width: calc(100% + 10px);
+			overflow-y: auto;
+		}
+
+		.message-input {
+			display: inline;
+			width: 90vw;
+			height: 35px;
+			margin-left: 5px;
+		}
+
+		.chatSendPart {
+			margin-top: 15px;
+		}
+
+		.message-name {
+			color: lightgrey;
+			font-size: 15px;
+		}
+
+		.message-content {
+			max-width: 80%;
+			word-wrap: break-word;
+			color: white;
+			background-color: #66a3ff;
+			border-radius: 5px;
+			padding: 10px;
+		}
+
+		.sent {
+			text-align: right;
+		}
+
+
+		.sent .message-content {
+			text-align: left;
+			display: inline-block;
+		}
+
+		.received .message-content {
+			display: inline-block;
+			background-color: #8cd98c;
+		}
+
+		.input-container {
+			
+			margin-top:15px;
+		}
+	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+
+		app.factory('socketFactory', function($rootScope){
+    		var socket = io(SERVER);
+
+    		socket.emit('chatAdmin');
+
+    		var socketFactory = {};
+
+    		socket.on('newMessage', function(message) {
+    			console.log("Socket on : newMessage");
+    			$rootScope.$broadcast('newMessage', message);
+    		});
+
+    		socketFactory.sendMessage = function(message){
+    			socket.emit('newMessage', message);
+    		}
+
+    		return socketFactory;
+    	});
+
+		app.factory('chatFactory', function($rootScope){
+			var chatFactory = []
+
+			chatFactory.team = [];
+			chatFactory.messages = [];
+
+			function checkTeam (teamName){
+				console.log("Check team : " + teamName);
+				for(var i = 0; i < chatFactory.team.length; i++){
+					if(chatFactory.team[i] == teamName){
+						return true;
+					}
+				}
+				return false;
+			}
+
+			chatFactory.addMessage = function(message){
+				console.log(message);
+				chatFactory.messages.push(message);
+			}
+
+			$rootScope.$on('newMessage', function(event, data) {
+				console.log("new message rootscope");
+				console.log(data);
+				chatFactory.messages.push(data);
+				if(!checkTeam(data.id)){
+					chatFactory.team.push(data.id);
+				}
+				$rootScope.$apply();
+			})
+
+			return chatFactory;
+		})
+
+		app.controller("thirdCtrl", function($scope, $rootScope, socketFactory, chatFactory) {
+
+			$scope.chatFactory = chatFactory;
+			$scope.myName = "Admin";
+			$scope.selectedTeam = "";
+			$scope.teamFilter = "";
+
+			$scope.sendMessage = function(message, team) {
+				console.log("message a envoyer : " + message);
+				socketFactory.sendMessage({'id': $scope.teamFilter, 'message': {'content' : message, 'user':$scope.myName}});
+				chatFactory.addMessage({'id': $scope.teamFilter, 'message': {'content' : message, 'user':$scope.myName}});
+				// chatFactory.messages.push({'id': "", 'message': {'content' : message, 'user' : $scope.myName}});
+			};
+
+
+			function scrollBottom() {
+				var chat = document.getElementById("messages");
+				if(chat) {
+					chat.scrollTop = chat.scrollHeight;
+				}
+			}
+
+    /**
+     * Reception d'un nouveau message
+     */
+     $rootScope.$on('newMessage', function(event, data) {
+     	scrollBottom();
+     })
+ });
+
+
+</script>
+</head>
+<body ng-app="myApp" ng-controller="thirdCtrl">
+	<div class="chat col-xs-12">
+		<div id="messages" class="messages">
+			<div ng-repeat="message in chatFactory.messages | filter: teamFilter" class="message" ng-class="{received: (message.message.user != myName), sent: (message.message.user == myName)}">
+				<div class="message-name">{{message.message.user}}</div>
+				<div class="message-content">
+					{{message.message.content}}
+				</div>
+			</div>
+		</div>
+
+		<form class="form-horizontal input-container">
+			<div class="form-group">
+				<input type="text" ng-model="myMessage" class="message-input" id="exampleInputName2" placeholder="Message...">
+				<button type="submit" class="btn btn-primary" ng-disabled="!myMessage" ng-click="sendMessage(myMessage); myMessage = ''">
+					<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+				</button>
+			</div>
+
+		</form>
+		<span ng-show="chatFactory.team.length > 0">Equipes :</span>
+		<label ng-repeat="team in chatFactory.team">
+			<input type="radio" ng-model="$parent.teamFilter" ng-value="team">
+			{{team}}
+		</label>
+	</div>
+</body>
+
+</html>

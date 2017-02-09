@@ -15,3 +15,8 @@ router.route('/admin')
 .get(function(req, res) {
     res.render('admin', {'envport': process.env.PORT});
 });
+
+router.route('/chat')
+.get(function(req, res) {
+    res.render('chat', {'envport': process.env.PORT});
+});
