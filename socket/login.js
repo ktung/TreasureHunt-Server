@@ -14,6 +14,10 @@ exports = module.exports = function(io){
             global.positionServerId = socket.id;
         });
 
+        socket.on("chatAdmin", function(){
+            global.chatAdminServerId = socket.id;
+        });
+
         socket.on('newUser', function (data) {
             console.log('socket newUser'+ inspect(data));
             socket.join(data.team);

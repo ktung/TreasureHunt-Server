@@ -6,6 +6,6 @@ exports = module.exports = function(socket, io){
         console.log('socket newMessage'+ inspect(data));
 
         io.sockets.in(data.id).emit('newMessage', data);
-        socket.to(global.positionServerId).emit("newMessage", data);
+        socket.to(global.chatAdminServerId).emit("newMessage", data);
     });
 };
