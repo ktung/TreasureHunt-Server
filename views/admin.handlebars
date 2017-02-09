@@ -1,31 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Treasure Hunt</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-    <style type="text/css">
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        html, body {
-            height: 100vh;
-            width: 100vw;
-        }
-        #map {
-            width: 100vw !important;
-            height: 50vh;
-        }
-        #tools {
-            height: : 50vh;
-        }
-    </style>
-</head>
-
-<body>
+<style type="text/css">
+    #map {
+        width: 100vw !important;
+        height: 50vh;
+    }
+    #tools {
+        height: : 50vh;
+    }
+</style>
 <div id="map"></div>
 
 <div id="tools">
@@ -33,7 +14,7 @@
     <div>
         <h1>Creating area</h1>
 
-        <form method="post" action="https://treasure-hunt-pns.herokuapp.com/areas">
+        <form name="formArea" method="post">
             <label for="latitude">Latitude</label>
             <input id="latitude" type="number" name="latitude" placeholder="Latitude" step="any" required />
 
@@ -49,7 +30,7 @@
     <div>
         <h1>Creating enigma</h1>
 
-        <form method="post" action="https://treasure-hunt-pns.herokuapp.com/enigmas">
+        <form name="formEnigma" method="post">
             <label for="name">Name</label>
             <input id="name" type="text" name="name" placeholder="Name" required />
 
@@ -75,6 +56,9 @@
 </div>
 
 <script>
+document.formArea.action = SERVER +'/areas';
+document.formEnigma.action = SERVER +'/enigmas';
+
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(function(pos) {
         let latInput = document.getElementById('latitude');
@@ -87,8 +71,6 @@ if (navigator.geolocation) {
     console.log('navigator.geolocation not available');
 }
 
-// const SERVER = "http://localhost:8080";
-const SERVER = "https://treasure-hunt-pns.herokuapp.com";
 // Init map
 const map = L.map('map').setView([43.6203152, 7.0656119], 15);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -135,5 +117,3 @@ document.getElementById('image').addEventListener('change', function() {
 });
 
 </script>
-</body>
-</html>
